@@ -207,7 +207,8 @@ function  mergeCss(finalCss) {
                     res.on('end',function () {
                         getLength++;
                         if(getLength === finalCss.length){
-                            saveFiles(cssString+inlineCss);
+                            
+                            (cssString+inlineCss);
                         }
                     })
                 })
@@ -221,8 +222,8 @@ function saveFiles(content) {
     let files = [];
     let nowIndex = 0;
     fileNameList.forEach(function (key,index) {
-
-            let con = global[key].replace(new RegExp("(<link.*\\s+href=(?:\"[^\"]*\"|'[^']*')[^<]*>)","gm"),'')+'<style type="text/css">'+ contentClear +'</style>';
+            let html=`div:after {content: "${global[key].replace(/<[^>]+>/g,"")}"}` // 在使用的时候不能匹配网页文字，加上此句话可以拿到网页所有字体
+            let con = global[key].replace(new RegExp("(<link.*\\s+href=(?:\"[^\"]*\"|'[^']*')[^<]*>)","gm"),'')+'<style type="text/css">'+ contentClear+html +'</style>';
             //con  = _.replace(global[key], new RegExp(config.onlinePath,"gm"), config.localPath);
             files.push(tempFilePath+key+'.html');
             fs.writeFile(tempFilePath+key+'.html',con,function () {
