@@ -207,8 +207,7 @@ function  mergeCss(finalCss) {
                     res.on('end',function () {
                         getLength++;
                         if(getLength === finalCss.length){
-                            
-                            (cssString+inlineCss);
+                            saveFiles(cssString+inlineCss);
                         }
                     })
                 })
